@@ -1,4 +1,4 @@
-package com.skplatform.aipd.entity;
+package com.skplatform.aipd.entity.maria;
 
 import java.io.Serializable;
 import java.util.UUID;

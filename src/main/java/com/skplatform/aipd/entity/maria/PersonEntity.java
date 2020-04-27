@@ -1,4 +1,4 @@
-package com.skplatform.aipd.entity;
+package com.skplatform.aipd.entity.maria;
 
 import java.util.Collections;
 import java.util.HashSet;

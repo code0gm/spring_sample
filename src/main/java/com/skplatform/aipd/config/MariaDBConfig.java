@@ -20,37 +20,37 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-		entityManagerFactoryRef="primaryEntityManager",
-		transactionManagerRef="primaryTransactionManager",
-		basePackages="com.skplatform.aipd.repository.primary")
-public class PrimaryDBConfig {
+		entityManagerFactoryRef="mariaEntityManager",
+		transactionManagerRef="mariaTransactionManager",
+		basePackages="com.skplatform.aipd.repository.maria")
+public class MariaDBConfig {
 	
 	@Autowired
 	private Environment env;
 	
 	@Primary
 	@Bean
-	public DataSource mysqlDataSource() {
+	public DataSource mariaDataSource() {
 		DriverManagerDataSource dataSource = new DriverManagerDataSource();
-		dataSource.setDriverClassName(env.getProperty("primary.datasource.driverClassName"));
-		dataSource.setUrl(env.getProperty("primary.datasource.url"));
-		dataSource.setUsername(env.getProperty("primary.datasource.username"));
-		dataSource.setPassword(env.getProperty("primary.datasource.password"));
+		dataSource.setDriverClassName(env.getProperty("maria.datasource.driverClassName"));
+		dataSource.setUrl(env.getProperty("maria.datasource.url"));
+		dataSource.setUsername(env.getProperty("maria.datasource.username"));
+		dataSource.setPassword(env.getProperty("maria.datasource.password"));
 		return dataSource;
 	}
 	
 	@Primary
-	@Bean(name="primaryEntityManager")
-	public LocalContainerEntityManagerFactoryBean mysqlEntityManagerFactory(EntityManagerFactoryBuilder builder) {
+	@Bean(name="mariaEntityManager")
+	public LocalContainerEntityManagerFactoryBean mariaEntityManagerFactory(EntityManagerFactoryBuilder builder) {
 		return builder
-				.dataSource(mysqlDataSource())
-				.packages("com.skplatform.aipd.entity")
+				.dataSource(mariaDataSource())
+				.packages("com.skplatform.aipd.entity.maria")
 				.build();
 	}
 	
 	@Primary
-	@Bean(name="primaryTransactionManager")
-	public PlatformTransactionManager mysqlTransactionManager(@Qualifier("primaryEntityManager") EntityManagerFactory entityManagerFactory) {
+	@Bean(name="mariaTransactionManager")
+	public PlatformTransactionManager mariaTransactionManager(@Qualifier("mariaEntityManager") EntityManagerFactory entityManagerFactory) {
 		return new JpaTransactionManager(entityManagerFactory);
 	}
 }
